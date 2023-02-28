@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include <math.h>
 
-void sin(int freq);
-void sinAndInvSin(int freq);
+void Sin(int freq);
+void sinAndInvSin(int freq1, int freq2);
 void sinTan(int freq);
 void cosTan(int freq);
 void sinSinh(int freq);
@@ -19,9 +19,6 @@ void sinCosAndSinAndTan(int freq1, int freq2, int freq3);
 //keep in mind the sound() function requires an int so all the functions
 //affecting a frequency have the end result put through a ceil function.
 int main(){
-  int amp = 1;
-  int freq = 100;
-  int oscilations = 1;
   int inputFunc;
   int inputFreq,inputFreq2,inputFreq3;
 
@@ -33,23 +30,23 @@ int main(){
   printf("9)sinCosAndSin		10)cosCosAndSin\n");
   printf("11)sinSinhAndSin		12)sinCosAndSinAndTan\n");
   scanf("%d", &inputFunc);
-  
+
   printf("Input a frequency to use\n");
   scanf("%d", &inputFreq);
-  
+
   if(inputFreq < 1){
 	printf("Frequency too low\n");
-	break;
+	return 0;
   }
-  
+
   switch(inputFunc){
 	  case 1:
-		sin(inputFreq);
+		Sin(inputFreq);
 		break;
 	  case 2:
 		printf("Input a second frequency\n");
 		scanf("%d", &inputFreq2);
-		sinAndInvertedSin(inputFreq, inputFreq2);
+		sinAndInvSin(inputFreq, inputFreq2);
 		break;
 	  case 3:
 		sinTan(inputFreq);
@@ -95,51 +92,50 @@ int main(){
 		printf("not a valid function\n");
 		break;
   }
-  
+
   return 0;
 }
 
 //result of a sin function affecting a frequency
-void sin(int freq){
+void Sin(int freq){
 	int degrees = 1;
-	int y
+	int y;
 	double radians;
-	
+
 	//one oscilation
 	while(degrees < 180) {
 		//radians
 		radians = (degrees*(M_PI/180));
-		
+
 		//freq * sinwave
 		y = (int) freq*sin(radians);
-		
+
 		sound(abs(y));
 		delay(50);
-		
+
 		degrees = degrees + 1;
 	}
-	
+
 	nosound();
-	return 0;
 }
 
 //result of a sin and inverted sin function affecting a frequency
 void sinAndInvSin(int freq1, int freq2){
 	int degreesY = 1;
 	int degreesZ = 181;
-	double radians;
+	double radiansY, radiansZ;
 	int y,z;
-	
+
 	//one oscilation
 	while(degreesY < 180) {
 		//radians
 		radiansY = (degreesY*(M_PI/180));
 		radiansZ = (degreesY*(M_PI/180));
-		
+
 		//freq * sinwave
 		y = (int) freq1*sin(radiansY);
 		z = (int) freq2*sin(radiansZ);
-		
+
 		sound(abs(y));
 		delay(75);
 		sound(abs(z));
@@ -148,142 +144,133 @@ void sinAndInvSin(int freq1, int freq2){
 		degreesY = degreesY + 1;
 		degreesZ = degreesZ - 1;
 	}
-	
+
 	nosound();
-	return 0;
 }
 
 void sinTan(int freq){
 	double degrees = 1;
-	int y 
+	int y;
 	double radians;
-	
+
 	while(degrees < 180) {
 		radians = (degrees*(M_PI/180));
-		
+
 		y = (int) freq*sin(tan(radians));
 		sound(abs(y));
 		delay(50);
-		
+
 		//increases by half a degree to better notice the change in frequency
 		degrees = degrees + 0.5;
 	}
-	
+
 	nosound();
-	return 0;
 }
 
 void cosTan(int freq){
 	double degrees = 1;
 	double radians;
-	int y 
-	
+	int y;
+
 	while(degrees < 180) {
 		radians = (degrees*(M_PI/180));
-		
+
 		y = (int) freq*cos(tan(radians));
 		sound(abs(y));
 		delay(50);
-		
+
 		degrees = degrees + 0.5;
 	}
-	
+
 	nosound();
-	return 0;
 }
 
 void sinSinh(int freq){
 	double degrees = 1;
 	double radians;
-	int y 
-	
+	int y;
+
 	while(degrees < 180) {
 		radians = (degrees*(M_PI/180));
-		
+
 		y = (int) freq*sin(sinh(radians));
 		sound(abs(y));
 		delay(50);
-		
+
 		degrees = degrees + 0.5;
 	}
-	
+
 	nosound();
-	return 0;
 }
 
 void cosCosh(int freq){
 	double degrees = 1;
 	double radians;
-	int y 
-	
+	int y;
+
 	while(degrees < 180) {
 		radians = (degrees*(M_PI/180));
-		
+
 		y = (int) freq*cos(cosh(radians));
 		sound(abs(y));
 		delay(50);
-		
+
 		degrees = degrees + 0.5;
 	}
-	
+
 	nosound();
-	return 0;
 }
 
 void tanSinh(int freq){
 	double degrees = 1;
 	double radians;
-	int y 
-	
+	int y;
+
 	while(degrees < 180) {
 		radians = (degrees*(M_PI/180));
-		
+
 		y = (int) freq*tan(sinh(radians));
 		sound(abs(y));
 		delay(50);
-		
+
 		degrees = degrees + 0.5;
 	}
-	
+
 	nosound();
-	return 0;
 }
 
 void tanCosh(int freq){
 	double degrees = 1;
 	double radians;
-	int y 
-	
+	int y;
+
 	while(degrees < 180) {
 		radians = (degrees*(M_PI/180));
-		
+
 		y = (int) freq*tan(cosh(radians));
 		sound(abs(y));
 		delay(50);
-		
+
 		degrees = degrees + 0.5;
 	}
-	
+
 	nosound();
-	return 0;
 }
 
 void sinCosAndSin(int freq1, int freq2){
 	int degreesY = 1;
 	//int degreesZ = 181;
-	double radians;
+	double radiansY;
+    //double radiansZ;
 	int y,z;
-	
-	//one oscilation
+
 	while(degreesY < 180) {
-		//radians
 		radiansY = (degreesY*(M_PI/180));
-		//radiansZ = (degreesY*(M_PI/180));
-		
-		//freq * sinwave
+		//radiansZ = (degreesZ*(M_PI/180));
+
 		y = (int) freq1*sin(cos(radiansY));
 		z = (int) freq2*sin(radiansY);
-		
+
 		sound(abs(y));
 		delay(75);
 		sound(abs(z));
@@ -292,27 +279,23 @@ void sinCosAndSin(int freq1, int freq2){
 		degreesY = degreesY + 1;
 		//degreesZ = degreesZ - 1;
 	}
-	
+
 	nosound();
-	return 0;
 }
 
 void cosCosAndSin(int freq1, int freq2){
 	int degreesY = 1;
 	//int degreesZ = 181;
-	double radians;
+	double radiansY, radiansZ;
 	int y,z;
-	
-	//one oscilation
+
 	while(degreesY < 180) {
-		//radians
 		radiansY = (degreesY*(M_PI/180));
-		//radiansZ = (degreesY*(M_PI/180));
-		
-		//freq * sinwave
+		//radiansZ = (degreesZ*(M_PI/180));
+
 		y = (int) freq1*cos(cos(radiansY));
 		z = (int) freq2*sin(radiansY);
-		
+
 		sound(abs(y));
 		delay(75);
 		sound(abs(z));
@@ -321,27 +304,24 @@ void cosCosAndSin(int freq1, int freq2){
 		degreesY = degreesY + 1;
 		//degreesZ = degreesZ - 1;
 	}
-	
+
 	nosound();
-	return 0;
 }
 
 void sinSinhAndSin(int freq1, int freq2){
 	int degreesY = 1;
 	//int degreesZ = 181;
-	double radians;
+	double radiansY;
+    //double radiansZ;
 	int y,z;
-	
-	//one oscilation
+
 	while(degreesY < 180) {
-		//radians
 		radiansY = (degreesY*(M_PI/180));
-		//radiansZ = (degreesY*(M_PI/180));
-		
-		//freq * sinwave
+		//radiansZ = (degreesZ*(M_PI/180));
+
 		y = (int) freq1*sin(sinh(radiansY));
 		z = (int) freq2*sin(radiansY);
-		
+
 		sound(abs(y));
 		delay(75);
 		sound(abs(z));
@@ -350,28 +330,25 @@ void sinSinhAndSin(int freq1, int freq2){
 		degreesY = degreesY + 1;
 		//degreesZ = degreesZ - 1;
 	}
-	
+
 	nosound();
-	return 0;
 }
 
 void sinCosAndSinAndTan(int freq1, int freq2, int freq3){
 	int degreesY = 1;
 	//int degreesZ = 181;
-	double radians;
+	double radiansY;
+    //double radiansZ;
 	int y,z,h;
-	
-	//one oscilation
+
 	while(degreesY < 180) {
-		//radians
 		radiansY = (degreesY*(M_PI/180));
-		//radiansZ = (degreesY*(M_PI/180));
-		
-		//freq * sinwave
+		//radiansZ = (degreesZ*(M_PI/180));
+
 		y = (int) freq1*sin(cos(radiansY));
 		z = (int) freq2*sin(radiansY);
 		h = (int) freq3*tan(radiansY);
-		
+
 		sound(abs(y));
 		delay(75);
 		sound(abs(z));
@@ -382,7 +359,6 @@ void sinCosAndSinAndTan(int freq1, int freq2, int freq3){
 		degreesY = degreesY + 1;
 		//degreesZ = degreesZ - 1;
 	}
-	
+
 	nosound();
-	return 0;
 }
